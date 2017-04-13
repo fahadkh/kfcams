@@ -10,9 +10,9 @@ gray1 = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)
 gray2 = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY)
 
 faces = face_cascade.detectMultiScale(gray1, 1.3, 5)
+face2 = face_cascade.detectMultiScale(gray2, 1.3, 5)
 
-faces.append(face_cascade.detectMultiScale(gray2, 1.3, 5))
-np.concatenate((a, b), axis=0)
+faces = np.concatenate((faces, face2), axis=0)
 print faces
 for (x,y,w,h) in faces:
     cv2.rectangle(img,(x,y),(x+w,y+h),(255,0,0),2)
