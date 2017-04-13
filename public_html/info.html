@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Original Theme By www.w3schools.com - Heavily Modified by Fahad Khan -->
+  <title>KFCams</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="styles/styling.css"></link>
+</head>
+
+<body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
+
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand glyphicon glyphicon-home" href="index.html">KFCams</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="index.html">ABOUT</a></li>
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">PORTAL
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a href="webcam.html">Webcam</a></li>
+            <li><a href="fourohfour.html">Security</a></li>
+            <li><a href="../webapp/index.html" target="_blank">Zentri-OS</a></li>
+          </ul>
+        </li>
+        <li><a href="info.html">INFO</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div id="about" class="jumbotron jumbotron-info text-left">
+  <div class="col-sm-8">
+    <h1>KFCams</h1>
+    <p>Security and Comfort.</p>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <br>
+  <h2>About</h2>
+  <h4>Northwestern EECS 395: Engineering Systems Design I</h4>
+  <p> 
+    This site is designed to display an image uploaded by a webcam created during the first iteration of Engineering Systems Design. The webcam is an embedded system built over the course of a quarter. It refreshes approximately every 4 seconds and uploads 640px x 480px images to the webcam.html page. <br><br>
+    Per the class description:<br><br>
+    This fast-paced course will teach a student how to go from a project idea to a fully functional prototype implementation. This involves a printed circuit design using PCB CAD software, surface mount soldering, MCU programming, CAD design for 3D printing, Android programming, and web design
+  </p><br><br><br>
+</div>
+
+<div class="container-fluid text-right bg-grey">
+  <h2>Creators</h2>
+  <div class="row text-right slideanim">
+    <div class="col-sm-6">
+      <img src="images/kyle.jpg" class="img-responsive"></img>
+    </div>
+    <div class="col-sm-6">
+      <h4> Kyle Richards: kylerichards2017@u.northwestern.edu</h4>
+    </div>
+  </div>
+  <div class="row text-right info-creator slideanim"> 
+    <div class="col-sm-6">
+      <img src="images/fahad.jpg" class="img-responsive"></img>
+    </div>
+    <div class="col-sm-6">
+      <h4> Fahad Khan: fahadkhan2017@u.northwestern.edu</h4>
+    </div> 
+  </div>  
+</div>
+
+<div class="container-fluid text-left">
+  <h2>Hardware</h2>
+  <div class="row">
+    <div class="col-sm-5">
+      <p>Microprocessor: Atmel ATSAM4S8B</p>
+      <p>Wifi card: Zentri AMW004</p>
+      <p>Camera: OmniVision OV2640</p>
+      <p>Board: Custom designed by Kyle and Fahad</p><br><br>
+    </div> 
+    <div class="col-sm-7">
+      <img src="images/hardware.jpg" class="img-responsive"></img>
+    </div> 
+  </div>  
+</div>
+
+<script>
+$(document).ready(function(){
+  // Add smooth scrolling to all links in navbar + footer link
+  $(".navbar a, footer a[href='#myPage']").on('click', function(event) {
+    // Make sure this.hash has a value before overriding default behavior
+    if (this.hash !== "") {
+      // Prevent default anchor click behavior
+      event.preventDefault();
+
+      // Store hash
+      var hash = this.hash;
+
+      // Using jQuery's animate() method to add smooth page scroll
+      // The optional number (900) specifies the number of milliseconds it takes to scroll to the specified area
+      $('html, body').animate({
+        scrollTop: $(hash).offset().top
+      }, 900, function(){
+   
+        // Add hash (#) to URL when done scrolling (default click behavior)
+        window.location.hash = hash;
+      });
+    } // End if
+  });
+  
+  $(window).scroll(function() {
+    $(".slideanim").each(function(){
+      var pos = $(this).offset().top;
+
+      var winTop = $(window).scrollTop();
+        if (pos < winTop + 600) {
+          $(this).addClass("slide");
+        }
+    });
+  });
+})
+</script>
+
+</body>
+</html>
+
+
