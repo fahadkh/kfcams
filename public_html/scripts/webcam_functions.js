@@ -12,10 +12,10 @@ function initWebSocket() {
         ws.close(); // close the websocket if open.
         ws = undefined;
     }
-    ws = new WebSocket('ws://' + ipName + '/stream');
+    ws = new WebSocket('ws://' + ipName + '/socket');
 
     ws.onopen = function () { // when handshake is complete:
-        log('WebSocket open to ZentriOS device ' + ipName);
+        log('WebSocket open to aws server ' + ipName);
         //*** Change the text of the button to read "Stop Webcam" ***//
         document.getElementById("btnWS").innerHTML = 'Stop Webcam';
         //*** Change the title attribute of the button to display "Click to stop webcam" ***//
@@ -54,7 +54,7 @@ function initWebSocket() {
         document.getElementById("timestamp").innerHTML = date.toString();
         
         //*** Set the source of the image to the image on the WiFi chip ***//
-        document.getElementById("pic").src = "../img.jpg";
+        document.getElementById("pic").src = "images/img.png";
         
         //Blink recording
         blinkstr = "Recording";
