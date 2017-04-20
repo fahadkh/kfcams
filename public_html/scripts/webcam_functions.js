@@ -54,7 +54,7 @@ function initWebSocket() {
         document.getElementById("timestamp").innerHTML = date.toString();
         
         //*** Set the source of the image to the image on the WiFi chip ***//
-        document.getElementById("pic").src = "images/img.png";
+        document.getElementById("pic").src = "/images/img.png?time=" + new Date().getTime();
         
         //Blink recording
         blinkstr = "Recording";

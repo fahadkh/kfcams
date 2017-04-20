@@ -9,7 +9,7 @@ clients = []
 class WebSocketHandler(tornado.websocket.WebSocketHandler):
 	def check_origin(self, origin):
 		parsed_origin = urlparse(origin)
-		return parsed_origin.netloc.endswith("ec2-13-58-118-151.us-east-2.compute.amazonaws.com")
+		return parsed_origin.netloc.endswith("ec2-13-58-118-151.us-east-2.compute.amazonaws.com") or parsed_origin.netloc.endswith("13.58.118.151")
 
 	def open(self):
 		print("WebSocket opened")

@@ -18,7 +18,6 @@ def facedetect(image):
 	gray1 = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)
 	faces = face_cascade.detectMultiScale(gray1, 1.3, 5)
 
-	print faces
 	centerFrame = (0,0)
 
 	for (x,y,w,h) in faces:
@@ -30,7 +29,7 @@ def facedetect(image):
 	    eyes = eye_cascade.detectMultiScale(roi_gray)
 	    for (ex,ey,ew,eh) in eyes:
 	        cv2.rectangle(roi_color,(ex,ey),(ex+ew,ey+eh),(0,255,0),2)
-
+	
 	cv2.imwrite(os.path.join(dirname, 'img.png'),img1)
 	return str(centerFrame)
 

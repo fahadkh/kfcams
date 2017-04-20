@@ -29,19 +29,19 @@ a:hover {
     font-family: Montserrat, sans-serif;
 }
 .jumbotron-main {
-    background: url(images/Home.jpg) no-repeat top center scroll;
+    background: url(/images/Home.jpg) no-repeat top center scroll;
     background-color: gray !important;
     background-size: cover;
     padding: 25em 25px;
 }
 .jumbotron-about{
-    background: url(images/secure.jpg) no-repeat top center scroll;
+    background: url(/images/secure.jpg) no-repeat top center scroll;
     background-color: gray !important;
     background-size: cover;
     padding: 24em 25px;
 }
 .jumbotron-info {
-    background: url(images/Home2.jpg) no-repeat top center scroll;
+    background: url(/images/Home2.jpg) no-repeat top center scroll;
     background-color: gray !important;
     background-size: cover;
     padding: 24em 25px;
