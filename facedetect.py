@@ -7,12 +7,14 @@ dirname = 'data/images'
 def facedetect(image):
 	face_cascade = cv2.CascadeClassifier('classifiers/haarcascade_frontalface_default.xml')
 	eye_cascade = cv2.CascadeClassifier('classifiers/haarcascade_eye.xml')
-	
+	with open('face.jpg', 'wb') as f:
+		f.write(image)	
 #	print image
 #	fi = cStringIO.StringIO(image)
 #	print fi
 
 	img1 = cv2.imread('face.jpg')
+	#img1 = convertToJpg(image)
 	gray1 = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)
 	faces = face_cascade.detectMultiScale(gray1, 1.3, 5)
 
@@ -31,3 +33,4 @@ def facedetect(image):
 
 	cv2.imwrite(os.path.join(dirname, 'img.png'),img1)
 	return str(centerFrame)
+

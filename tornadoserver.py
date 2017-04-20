@@ -25,8 +25,9 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
 
 class MainHandler(tornado.web.RequestHandler):
 	def post(self):
-		image = self.get_argument('image', '')
+		image = self.request.body
 		center_face = fd.facedetect(image)
+		print(center_face)
 		self.write(center_face)
 		update_clients()
 	get = post
@@ -34,7 +35,8 @@ class MainHandler(tornado.web.RequestHandler):
 
 def update_clients():
 	for client in clients:
-		client.write_message(u"hi")
+		client.write_message("hi")
+		print("sent message to client")
 
 def make_app():
     return tornado.web.Application([
