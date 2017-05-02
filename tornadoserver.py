@@ -10,10 +10,10 @@ clients = []
 
 class CamSocketHandler(tornado.websocket.WebSocketHandler):
 	def check_origin(self, origin):
-		parsed_origin = urlparse(origin)
-		print parsed_origin
-		with open("socket_access.log", "a") as f:
-			f.write(time.strftime("%c") + ": " + str(parsed_origin) + "\n")
+		#parsed_origin = urlparse(origin)
+		#print parsed_origin
+		#with open("socket_access.log", "a") as f:
+		#	f.write(time.strftime("%c") + ": " + str(parsed_origin) + "\n")
 		return True
 
 	def open(self):
@@ -21,9 +21,10 @@ class CamSocketHandler(tornado.websocket.WebSocketHandler):
 
 	def on_message(self, message):
 		print "received image: " + message
-		center_face=fd.facedetect(message)
+		#center_face=fd.facedetect(message)
+		center_face = "message received"
 		print(center_face)
-		self.write(center_face)
+		self.write_message(center_face)
 		update_clients()
 
 	def on_close(self):
@@ -48,11 +49,15 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
 
 class MainHandler(tornado.web.RequestHandler):
 	def post(self):
-		image = self.request.body
-		center_face = fd.facedetect(image)
-		print(center_face)
-		self.write(center_face)
-		update_clients()
+		if self.request.headers["Content-Type"]=='imagebin':
+			image = self.request.body
+			center_face = fd.facedetect(image)
+			print(center_face)
+			self.write(center_face)
+			update_clients()
+		else:
+			print(self.request.headers)
+			print(self.request.body)
 	get = post
 	
 
