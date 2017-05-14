@@ -33,7 +33,9 @@ class CamSocketHandler(tornado.websocket.WebSocketHandler):
 class WebSocketHandler(tornado.websocket.WebSocketHandler):
 	def check_origin(self, origin):
 		parsed_origin = urlparse(origin)
-		return parsed_origin.netloc.endswith("ec2-13-58-118-151.us-east-2.compute.amazonaws.com") or parsed_origin.netloc.endswith("13.58.118.151")
+
+		# some restrictions on origin, ip included for testing
+		return parsed_origin.netloc.endswith("ec2-52-15-48-211.us-east-2.compute.amazonaws.com") or parsed_origin.netloc.endswith("52.15.48.211") or parsed_origin.netloc.endswith("kfcams.me")
 	
 	def open(self):
 		print("WebSocket opened")
@@ -51,9 +53,8 @@ class MainHandler(tornado.web.RequestHandler):
 	def post(self):
 		if self.request.headers["Content-Type"]=='imagebin':
 			image = self.request.body
-			center_face = fd.facedetect(image)
-			print(center_face)
-			self.write(center_face)
+			command = fd.facedetect(image)
+			self.write(command)
 			update_clients()
 		else:
 			print(self.request.headers)

@@ -1,7 +1,7 @@
 // Variables
 var ws = undefined; // websocket instance
 var logs = [];
-var logsLimit = 4;
+var logsLimit = 3;
 var b = document.getElementById('btnWS');
 var blinkstr = " ";
 
@@ -9,8 +9,7 @@ var blinkstr = " ";
 function initWebSocket() {
     var ipName = window.location.hostname;      //manually input wifi chip IP address to test
     if (ws) {
-        ws.close(); // close the websocket if open.
-        ws = undefined;
+        ws.onclose(); // close the websocket if open.
     }
     ws = new WebSocket('ws://' + ipName + '/socket');
 
@@ -44,7 +43,8 @@ function initWebSocket() {
         
         //Turn off recording blink
         document.getElementById("recordblink").innerHTML = "";
-        
+		
+        ws = undefined;
     };
 
     ws.onmessage = function (event) { // when client receives a WebSocket message:
@@ -63,17 +63,8 @@ function initWebSocket() {
     };
 	
 	ws.onerror = function () { // when an error occurs
-		ws.close();
+		ws.onclose();
 		log('Websocket error');
-        //*** Change the text of the button to read "Start Webcam" ***//
-		
-        //*** Change the title attribute of the button to display "Click to start webcam" ***//
-		
-        //*** Enable the button" ***//
-        document.getElementById("btnWS").disabled = false;
-        
-        //Turn off recording blink
-        document.getElementById("recordblink").innerHTML = "";
 		
 	}
 }
@@ -84,8 +75,7 @@ function initWebSocket() {
 function buttonHit() {
     document.getElementById("btnWS").disabled = true;
     if (ws) {
-        ws.close(); // close the websocket if open.
-        ws = undefined;
+        ws.onclose(); // close the websocket if open.
     } else {
         initWebSocket();
     }
