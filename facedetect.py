@@ -4,6 +4,10 @@ import cv2
 
 dirname = 'data/images'
 
+dog_filter = cv2.imread('dog_filter.png')
+
+
+
 def facedetect(image):
 	face_cascade = cv2.CascadeClassifier('classifiers/haarcascade_frontalface_default.xml')
 	eye_cascade = cv2.CascadeClassifier('classifiers/haarcascade_eye.xml')
