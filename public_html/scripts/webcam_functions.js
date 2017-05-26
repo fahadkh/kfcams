@@ -3,6 +3,8 @@ var ws = undefined; // websocket instance
 var logs = [];
 var logsLimit = 3;
 var b = document.getElementById('btnWS');
+var c = document.getElementById('btnC');
+var enable = false;
 var blinkstr = " ";
 
 // Initialize the WebSocket
@@ -44,6 +46,9 @@ function initWebSocket() {
         //Turn off recording blink
         document.getElementById("recordblink").innerHTML = "";
 		
+		enable = false;	
+		document.getElementById("btnC").innderHTML = 'Manual Track';
+
         ws = undefined;
     };
 
@@ -81,7 +86,29 @@ function buttonHit() {
     }
 }
 
+function buttonHitC() {
+	if (ws) {
+		if(enable) {
+			enable = false;	
+			console.log("disable manual");
+			ws.send(JSON.stringify({
+				mode: "auto"
+			}));
+			document.getElementById("btnC").innerHTML = 'Manual Track';
+		}
+		else {
+			enable = true;
+			console.log("enable manual");
+			ws.send(JSON.stringify({
+				mode: "manual"
+			}));
+			document.getElementById("btnC").innerHTML = 'Auto Track';
+		}
+	}
+}
+
 document.getElementById("btnWS").addEventListener("click", buttonHit);      //use buttonHit function
+document.getElementById("btnC").addEventListener("click", buttonHitC);
 
 
 // Other functions
@@ -107,9 +134,69 @@ function showLog(logArray, logId, logLimit) {
     document.getElementById(logId).innerHTML = logContent;
 }
 
+function initJoy() {
+/*	var joystick = new VirtualJoystick({
+		container : document.getElementById('joyContainer'),
+		mouseSupport : true,
+	});
+	
+	setInterval(function() {
+		if(joystick.up())
+		{
+			console.log("up detected");
+		}
+		else if(joystick.down())
+		{
+			console.log("down detected");
+		}
+		if(joystick.left())
+		{
+			console.log("left detected");
+		}
+		else if(joystick.right())
+		{
+			console.log("right detected");
+		}
+	}, 1/10 * 1000);	
+*/
+	window.addEventListener("keydown", getKey, false);
+}
+
+function getKey(e) {
+	var keyCode = e.keyCode;
+	if(enable) {
+		if (keyCode == 87)
+		{	
+			ws.send(JSON.stringify({
+				command: "up"
+			}));
+		}
+		else if (keyCode == 83)
+		{	
+			ws.send(JSON.stringify({
+				command: "down"
+			}));
+		}
+
+		if (keyCode == 65)
+		{	
+			ws.send(JSON.stringify({
+				command: "left"
+			}));
+		}
+		else if (keyCode == 68)
+		{	
+			ws.send(JSON.stringify({
+				command: "right"
+			}));
+		}
+	}
+}
+
 // Define initialization function
 function init() {
     initWebSocket();
+	initJoy();
 }
 
 // Open Websocket as soon as page loads

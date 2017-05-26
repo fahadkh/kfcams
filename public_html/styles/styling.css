@@ -122,8 +122,8 @@ a:hover {
 }
 
 .services-footer {
-    padding-top: 25px;
-    padding-bottom: 50px;
+    padding-top: 50px;
+    padding-bottom: 100px;
 }
 
 .error {
@@ -144,6 +144,20 @@ a:hover {
 }
 
 #btnWS:hover {
+    color: #2A7E43 !important;
+    background-color: #fff !important;
+}
+
+#btnC {
+    padding: 10px 20px;
+    background-color: #2A7E43;
+    color: #f1f1f1;
+    border-radius: 0;
+    box-shadow: 0;
+    transition: .2s;
+}
+
+#btnC:hover {
     color: #2A7E43 !important;
     background-color: #fff !important;
 }

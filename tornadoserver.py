@@ -4,8 +4,14 @@ import tornado.websocket
 import time
 import facedetect as fd
 from urlparse import urlparse
+import json
 
 clients = []
+auto = True
+left = False
+right = False
+up = False
+down = False
 
 
 class CamSocketHandler(tornado.websocket.WebSocketHandler):
@@ -38,11 +44,39 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
 		return parsed_origin.netloc.endswith("ec2-52-15-48-211.us-east-2.compute.amazonaws.com") or parsed_origin.netloc.endswith("52.15.48.211") or parsed_origin.netloc.endswith("kfcams.me")
 	
 	def open(self):
+		global auto	
+		auto = False
 		print("WebSocket opened")
 		clients.append(self)
 
 	def on_message(self, message):
-		self.write_message(u"You said: " + message)
+		global auto
+		global up
+		global down
+		global right
+		global left
+
+		data = json.loads(message)
+		if 'mode' in data:
+			if data['mode'] == 'auto':
+				auto = True
+				print "auto mode"
+			elif data['mode'] == 'manual':
+				auto = False
+				print "manual mode"
+		elif 'command' in data:
+			if data['command'] == 'up':
+				up = True
+				down = False
+			elif data['command'] == 'down':
+				down = True
+				up = False
+			elif data['command'] == 'left':
+				left = True
+				right = False
+			elif data['command'] == 'right':
+				right = True
+				left = False
 
 	def on_close(self):
 		print("WebSocket closed")
@@ -51,11 +85,43 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
 
 class MainHandler(tornado.web.RequestHandler):
 	def post(self):
+		global auto
+		global up
+		global down
+		global right
+		global left
+
 		if self.request.headers["Content-Type"]=='imagebin':
-			image = self.request.body
-			command = fd.facedetect(image)
-			self.write(command)
-			update_clients()
+			if auto:
+				image = self.request.body
+				command = fd.facedetect(image)
+				self.write(command)
+				update_clients()
+
+			else:
+				image = self.request.body
+				fd.facedetect(image)
+				command = [0,0,0,0]
+
+				if up:
+					command[1] = 1
+					command[3] = 1
+					up = False
+				elif down:
+					command[1] = 1
+					down = False
+				if left:
+					command[0] = 1
+					left = False
+				elif right:
+					command[0] = 1
+					command[2] = 1
+					right = False
+				
+				cmd = "cmd="+"".join(str(x) for x in command)
+				self.write(cmd)
+				update_clients()
+
 		else:
 			print(self.request.headers)
 			print(self.request.body)
