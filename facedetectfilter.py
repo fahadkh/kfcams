@@ -17,11 +17,9 @@ def facedetect(image):
 #	print image
 #	fi = cStringIO.StringIO(image)
 #	print fi
-
 	img1 = cv2.imread('face.jpg')
 	image_rows,image_cols,image_channels = img1.shape
 	img1 = convertToJpg(image)
-	img1 = image
 	gray1 = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 	faces = face_cascade.detectMultiScale(gray1, 1.3, 5)
 
