@@ -6,7 +6,7 @@ dirname = 'data/images'
 # img1 = cv2.imread('C:\Users\danielfelixkim\Documents\hi_2people.jpg')
 face_filter = cv2.imread('dog_filter.png')
 rows,cols,channels = face_filter.shape
-image_rows,image_cols,image_channels = img1.shape
+
 
 
 def facedetect(image):
@@ -19,6 +19,7 @@ def facedetect(image):
 #	print fi
 
 	img1 = cv2.imread('face.jpg')
+	image_rows,image_cols,image_channels = img1.shape
 	img1 = convertToJpg(image)
 	img1 = image
 	gray1 = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
