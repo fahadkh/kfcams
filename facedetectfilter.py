@@ -3,8 +3,8 @@ import os
 import cv2
 
 dirname = 'data/images'
-img1 = cv2.imread('C:\Users\danie\Documents\dfkwall.jpg')
-face_filter = cv2.imread('C:\Users\danie\Documents\dog_filter.png')
+# img1 = cv2.imread('C:\Users\danielfelixkim\Documents\hi_2people.jpg')
+face_filter = cv2.imread('dog_filter.png')
 rows,cols,channels = face_filter.shape
 image_rows,image_cols,image_channels = img1.shape
 
@@ -12,14 +12,14 @@ image_rows,image_cols,image_channels = img1.shape
 def facedetect(image):
 	face_cascade = cv2.CascadeClassifier('classifiers/haarcascade_frontalface_default.xml')
 	eye_cascade = cv2.CascadeClassifier('classifiers/haarcascade_eye.xml')
-# 	with open('face.jpg', 'wb') as f:
-# 		f.write(image)	
-# #	print image
-# #	fi = cStringIO.StringIO(image)
-# #	print fi
+	with open('face.jpg', 'wb') as f:
+		f.write(image)	
+#	print image
+#	fi = cStringIO.StringIO(image)
+#	print fi
 
-# 	img1 = cv2.imread('face.jpg')
-	#img1 = convertToJpg(image)
+	img1 = cv2.imread('face.jpg')
+	img1 = convertToJpg(image)
 	img1 = image
 	gray1 = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 	faces = face_cascade.detectMultiScale(gray1, 1.3, 5)
@@ -45,11 +45,12 @@ def facedetect(image):
 		# face_filter_height  = int(round(h * 1.2))
 		# face_filter_width  = int(round(face_filter_height * orig_filter_width / orig_filter_height))
 
-		x1 = x + 20
-		x2 = cols+ x + 20
+		x1 = x 
+		x2 = x + w
 		y1 = y-50 
 		y2 = rows+y-50
 		print y1, y2, x1, x2, w, h, rows, cols, image_rows,image_cols
+
 		# Check for clipping
 		if x1 < 0:
 			x1 = 0
@@ -61,8 +62,8 @@ def facedetect(image):
 			y2 = image_rows
 
 		# Re-calculate the width and height of the mustache image
-		mustacheWidth = x2 - x1
-		mustacheHeight = y2 - y1
+		filterWidth = x2 - x1
+		filterHeight = y2 - y1
 		print y1, y2, x1, x2, w, h, rows, cols, image_rows,image_cols
 		# # Re-size the original image and the masks to the mustache sizes
 		# # calcualted above
@@ -73,9 +74,9 @@ def facedetect(image):
 		ret, mask = cv2.threshold(img2gray, 10, 255, cv2.THRESH_BINARY)
 		mask_inv = cv2.bitwise_not(mask)
 
-		filter_apply = cv2.resize(face_filter, (cols,rows), interpolation = cv2.INTER_AREA)
-		mask = cv2.resize(mask, (cols,rows), interpolation = cv2.INTER_AREA)
-		mask_inv = cv2.resize(mask_inv, (cols,rows), interpolation = cv2.INTER_AREA)
+		filter_apply = cv2.resize(face_filter, (filterWidth,filterHeight), interpolation = cv2.INTER_AREA)
+		mask = cv2.resize(mask, (filterWidth,filterHeight), interpolation = cv2.INTER_AREA)
+		mask_inv = cv2.resize(mask_inv, (filterWidth,filterHeight), interpolation = cv2.INTER_AREA)
 
 		# I want to put logo on top-left corner, So I create a ROI
 		roi = img1[y1:y2,x1:x2]
@@ -109,11 +110,11 @@ def facedetect(image):
 	
 
 
-facedetect(img1)
-r = 600.0 / img1.shape[1]
-dim = (600, int(img1.shape[0] * r))
-img1 = cv2.resize(img1, dim, interpolation = cv2.INTER_AREA)
-cv2.imshow('res',img1)
+# facedetect(img1)
+# r = 600.0 / img1.shape[1]
+# dim = (600, int(img1.shape[0] * r))
+# img1 = cv2.resize(img1, dim, interpolation = cv2.INTER_AREA)
+# cv2.imshow('res',img1)
 
-cv2.waitKey(0)
-cv2.destroyAllWindows()
+# cv2.waitKey(0)
+# cv2.destroyAllWindows()
