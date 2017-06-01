@@ -105,8 +105,8 @@ def facedetect(image):
 
 
 
-	# cv2.imwrite(os.path.join(dirname, 'img.png'),img1)
-	# return "cmd=" + "".join(str(x) for x in command)
+	cv2.imwrite(os.path.join(dirname, 'img.png'),img1)
+	return "cmd=" + "".join(str(x) for x in command)
 	
 
 
