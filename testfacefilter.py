@@ -3,8 +3,8 @@ import os
 import cv2
 
 dirname = 'data/images'
-# img1 = cv2.imread('C:\Users\danielfelixkim\Documents\hi_2people.jpg')
-face_filter = cv2.imread('dog_filter.png')
+img1 = cv2.imread('C:\Users\danielfelixkim\Documents\hi_2people.jpg')
+face_filter = cv2.imread('C:\Users\danielfelixkim\Documents\dog_filter.png')
 rows,cols,channels = face_filter.shape
 
 
@@ -17,7 +17,7 @@ def facedetect(image):
 #	print image
 #	fi = cStringIO.StringIO(image)
 #	print fi
-	img1 = cv2.imread('face.jpg')
+	# img1 = cv2.imread('face.jpg')
 	image_rows,image_cols,image_channels = img1.shape
 #	img1 = convertToJpg(image)
 	gray1 = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)
@@ -30,21 +30,21 @@ def facedetect(image):
 
 	#Detect Faces
 	for (x,y,w,h) in faces:
-		centerFrame = x+w/2,y+h/2			
+		cv2.rectangle(img1,(x,y),(x+w,y+h),(255,0,0),2)
+		cv2.rectangle(img1,(x,y),(x+w,y),(0,0,255),2)
+		print w
+		centerFrame = x+w/2,y+h/2
+
 		roi_gray = gray1[y:y+h, x:x+w]
 		roi_color = img1[y:y+h, x:x+w]
 		eyes = eye_cascade.detectMultiScale(roi_gray)
-
 		# #Add Filters
-		
-		# face_filter_height  = int(round(h * 1.2))
-		# face_filter_width  = int(round(face_filter_height * orig_filter_width / orig_filter_height))
+
 
 		x1 = x 
 		x2 = x + w
 		y1 = y-50 
 		y2 = rows+y-50
-
 		# Check for clipping
 		if x1 < 0:
 			x1 = 0
@@ -54,6 +54,7 @@ def facedetect(image):
 			x2 = image_cols
 		if y2 > image_rows:
 			y2 = image_rows
+		print image_rows,image_cols,image_channels, x, x1,x2, y, y1, y2
 
 		# Re-calculate the width and height of the mustache image
 		filterWidth = x2 - x1
@@ -98,16 +99,16 @@ def facedetect(image):
 
 
 
-	cv2.imwrite(os.path.join(dirname, 'img.png'),img1)
-	return "cmd=" + "".join(str(x) for x in command)
+	# cv2.imwrite(os.path.join(dirname, 'img.png'),img1)
+	# return "cmd=" + "".join(str(x) for x in command)
 	
 
 
-# facedetect(img1)
-# r = 600.0 / img1.shape[1]
-# dim = (600, int(img1.shape[0] * r))
-# img1 = cv2.resize(img1, dim, interpolation = cv2.INTER_AREA)
-# cv2.imshow('res',img1)
+facedetect(img1)
+r = 600.0 / img1.shape[1]
+dim = (600, int(img1.shape[0] * r))
+img1 = cv2.resize(img1, dim, interpolation = cv2.INTER_AREA)
+cv2.imshow('res',img1)
 
-# cv2.waitKey(0)
-# cv2.destroyAllWindows()
+cv2.waitKey(0)
+cv2.destroyAllWindows()
