@@ -40,10 +40,10 @@ def facedetect(image):
 		# face_filter_height  = int(round(h * 1.2))
 		# face_filter_width  = int(round(face_filter_height * orig_filter_width / orig_filter_height))
 
-		x1 = x 
+		x1 = x - 30 
 		x2 = x + w
-		y1 = y-50 
-		y2 = rows+y-50
+		y1 = y -50 
+		y2 = h+y + 70
 
 		# Check for clipping
 		if x1 < 0:
