@@ -162,6 +162,19 @@ a:hover {
     background-color: #fff !important;
 }
 
+#btnF {
+    padding: 10px 20px;
+    background-color: #2A7E43;
+    color: #f1f1f1;
+    border-radius: 0;
+    box-shadow: 0;
+    transition: .2s;
+}
+
+#btnF:hover {
+    color: #2A7E43 !important;
+    background-color: #fff !important;
+}
 .panel:hover {
     box-shadow: 5px 0px 40px rgba(0,0,0, .2);
     cursor: pointer;

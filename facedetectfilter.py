@@ -19,8 +19,8 @@ def facedetect(image):
 #	print fi
 	img1 = cv2.imread('face.jpg')
 	image_rows,image_cols,image_channels = img1.shape
-	img1 = convertToJpg(image)
-	gray1 = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+#	img1 = convertToJpg(image)
+	gray1 = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)
 	faces = face_cascade.detectMultiScale(gray1, 1.3, 5)
 
 	centerFrame = (0,0)
@@ -48,7 +48,6 @@ def facedetect(image):
 		x2 = x + w
 		y1 = y-50 
 		y2 = rows+y-50
-		print y1, y2, x1, x2, w, h, rows, cols, image_rows,image_cols
 
 		# Check for clipping
 		if x1 < 0:
@@ -63,7 +62,6 @@ def facedetect(image):
 		# Re-calculate the width and height of the mustache image
 		filterWidth = x2 - x1
 		filterHeight = y2 - y1
-		print y1, y2, x1, x2, w, h, rows, cols, image_rows,image_cols
 		# # Re-size the original image and the masks to the mustache sizes
 		# # calcualted above
 

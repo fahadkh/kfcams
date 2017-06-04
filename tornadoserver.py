@@ -3,11 +3,13 @@ import tornado.web
 import tornado.websocket
 import time
 import facedetect as fd
+import facedetectfilter as fdf
 from urlparse import urlparse
 import json
 
 clients = []
 auto = True
+filter_mode = False
 left = False
 right = False
 up = False
@@ -51,12 +53,15 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
 
 	def on_message(self, message):
 		global auto
+		global filter_mode
 		global up
 		global down
 		global right
 		global left
 
 		data = json.loads(message)
+		
+		# Check for tracking mode
 		if 'mode' in data:
 			if data['mode'] == 'auto':
 				auto = True
@@ -64,6 +69,8 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
 			elif data['mode'] == 'manual':
 				auto = False
 				print "manual mode"
+
+		# Check for manual mode commands
 		elif 'command' in data:
 			if data['command'] == 'up':
 				up = True
@@ -77,6 +84,15 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
 			elif data['command'] == 'right':
 				right = True
 				left = False
+		
+		# Check for filter selection
+		elif 'fmode' in data:
+			if data['fmode'] == 'on':
+				filter_mode = True
+				print "filters on"
+			elif data['fmode'] == 'off':
+				filter_mode = False
+				print "filters off"
 
 	def on_close(self):
 		print("WebSocket closed")
@@ -86,6 +102,7 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
 class MainHandler(tornado.web.RequestHandler):
 	def post(self):
 		global auto
+		global filter_mode
 		global up
 		global down
 		global right
@@ -94,7 +111,10 @@ class MainHandler(tornado.web.RequestHandler):
 		if self.request.headers["Content-Type"]=='imagebin':
 			if auto:
 				image = self.request.body
-				command = fd.facedetect(image)
+				if filter_mode:
+					command = fdf.facedetect(image)
+				else:
+					command = fd.facedetect(image)
 				self.write(command)
 				update_clients()
 

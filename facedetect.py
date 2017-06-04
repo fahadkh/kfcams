@@ -20,8 +20,8 @@ def facedetect(image):
 #	print fi
 
 	img1 = cv2.imread('face.jpg')
-	img1 = convertToJpg(image)
-	gray1 = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+#	img1 = convertToJpg(image)
+	gray1 = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)
 	faces = face_cascade.detectMultiScale(gray1, 1.3, 5)
 
 	centerFrame = (0,0)

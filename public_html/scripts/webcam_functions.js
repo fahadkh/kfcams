@@ -4,7 +4,9 @@ var logs = [];
 var logsLimit = 3;
 var b = document.getElementById('btnWS');
 var c = document.getElementById('btnC');
+var f = document.getElementById('btnF');
 var enable = false;
+var filter = false;
 var blinkstr = " ";
 
 // Initialize the WebSocket
@@ -107,8 +109,30 @@ function buttonHitC() {
 	}
 }
 
+function buttonHitF() {
+	if (ws) {
+		if(filter) {
+			filter = false;	
+			console.log("disable filter");
+			ws.send(JSON.stringify({
+				fmode: "off"
+			}));
+			document.getElementById("btnF").innerHTML = 'Filters On';
+		}
+		else {
+			filter = true;
+			console.log("enable filter");
+			ws.send(JSON.stringify({
+				fmode: "on"
+			}));
+			document.getElementById("btnF").innerHTML = 'Filters Off';
+		}
+	}
+}
+
 document.getElementById("btnWS").addEventListener("click", buttonHit);      //use buttonHit function
 document.getElementById("btnC").addEventListener("click", buttonHitC);
+document.getElementById("btnF").addEventListener("click", buttonHitF);
 
 
 // Other functions
