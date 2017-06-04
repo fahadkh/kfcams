@@ -30,7 +30,6 @@ def facedetect(image):
 
 	#Detect Faces
 	for (x,y,w,h) in faces:
-		cv2.rectangle(img1,(x,y),(x+w,y+h),(255,0,0),2)
 		centerFrame = x+w/2,y+h/2			
 		roi_gray = gray1[y:y+h, x:x+w]
 		roi_color = img1[y:y+h, x:x+w]
