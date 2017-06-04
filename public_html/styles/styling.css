@@ -134,6 +134,20 @@ a:hover {
     padding-top: 80px;
 }
 
+.control {
+    padding: 10px 20px;
+    background-color: #2A7E43;
+    color: #f1f1f1;
+    border-radius: 0;
+    box-shadow: 0;
+    transition: .2s;
+}
+
+.control:hover {
+    color: #2A7E43 !important;
+    background-color: #fff !important;
+}
+
 #btnWS {
     padding: 10px 20px;
     background-color: #2A7E43;

@@ -101,12 +101,11 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
 
 class MainHandler(tornado.web.RequestHandler):
 	def post(self):
-		global auto
-		global filter_mode
+
 		global up
 		global down
-		global right
 		global left
+		global right
 
 		if self.request.headers["Content-Type"]=='imagebin':
 			if auto:
@@ -120,7 +119,12 @@ class MainHandler(tornado.web.RequestHandler):
 
 			else:
 				image = self.request.body
-				fd.facedetect(image)
+
+				if filter_mode:
+					fdf.facedetect(image)
+				else:
+					fd.facedetect(image)
+
 				command = [0,0,0,0]
 
 				if up:
