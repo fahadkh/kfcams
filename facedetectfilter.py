@@ -40,7 +40,7 @@ def facedetect(image):
 		# face_filter_height  = int(round(h * 1.2))
 		# face_filter_width  = int(round(face_filter_height * orig_filter_width / orig_filter_height))
 
-		x1 = x - 30 
+		x1 = x - 15 
 		x2 = x + w
 		y1 = y -50 
 		y2 = h+y + 70
