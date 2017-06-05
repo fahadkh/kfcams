@@ -15,6 +15,10 @@
 
 <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
 
+<div class="joyContainer">
+<script src="scripts/virtualjoystick.js"></script>
+</div>
+
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -47,28 +51,16 @@
 <div class="container stream">
   <div class="row text-center web-row">
     <div class="col-sm-2">
-		<div class="row text-left">
-			<div class="col-sm-4"></div>
-			<div class="col-sm-4">
-				<button class="control">up</button>
-			</div>
-			<div class="col-sm-4"></div>
-		</div>
-		<div class="row text-left">
-			<div class="col-sm-4">
-				<button class="control">left</button>
-			</div>
-			<div class="col-sm-4">
-				<button class="control">down</button>
-			</div>
-			<div class="col-sm-4">
-				<button class="control">right</button>
-			</div>
-		</div>
 	</div> 
     <div class="col-sm-8">
       <div class="thumbnail" id="picdiv">
-        <img id="pic" src="images/img.png" alt="My webcam image" height="20%">
+        <div id="img-cont">
+			<img id="pic" src="images/img.png" alt="My webcam image" height="20%">
+			<button class="control-info" id="up">Up</button>
+			<button class="control-info" id="left">Left</button>
+			<button class="control-info" id="down">Down</button>
+			<button class="control-info" id="right">Right</button>
+		</div>
         <p><strong>Web Stream</strong></p>
         <p id="timestamp"></p>
         <button id="btnWS">Start Streaming</button>
@@ -83,8 +75,32 @@
   </div>  
 </div>
 
-<div class="joyContainer" z-index="-1">
+<!--div class="container-fluid">
+<div class="row">
+  <div class="col-sm-4"></div>
+  <div class="col-sm-4">
+  	<div class="row control-row">
+    	<div class="col-sm-4"></div>
+      	<div class="col-sm-4">
+     		<button class="control">up</button>
+      	</div>
+		<div class="col-sm-4"></div>
+	</div>
+    <div class="row">
+      <div class="col-sm-4">
+      	<button class="control">left</button>
+      </div>
+      <div class="col-sm-4">
+      	<button class="control">down</button>
+      </div>
+      <div class="col-sm-4">
+      	<button class="control">right</button>
+      </div>
+  </div>
+  <div class="col-sm-4"></div> 
 </div>
+</div-->
+
 
 <div class="container-fluid">
   <div class="row text-center">
@@ -96,7 +112,6 @@
 </div>
 
 <script src="scripts/webcam_functions.js"></script>
-<script src="scripts/virtualjoystick.js"></script>
 <script>
 $(document).ready(function(){
   // Add smooth scrolling to all links in navbar + footer link

@@ -55,6 +55,14 @@ a:hover {
     padding-right: 0px;
 }
 
+.joyContainer {
+	position: relative;
+}
+
+.control {
+	width: 100%;
+}
+
 .bg-grey {
     background-color: #f6f6f6;
 }
@@ -146,6 +154,69 @@ a:hover {
 .control:hover {
     color: #2A7E43 !important;
     background-color: #fff !important;
+}
+
+#img-cont {
+	position: relative;
+}
+
+.control-info {
+	background-color: #EEE;
+	border: none;
+	opacity: 0;
+ 	transition: opacity .3s ease-in-out;
+ 	-moz-transition: opacity .3s ease-in-out;
+ 	-webkit-transition: opacity .3s ease-in-out;
+ 	-o-transition: opacity .3s ease-in-out;
+}
+
+.control-info:hover {
+	opacity: 0.5;
+}
+
+.control-info:active {
+	background-color: #FFF;
+	border: none;
+}
+
+#up {
+	position: absolute;
+	top: 0%;
+	bottom: 50%;
+	left: 25%;
+	right: 25%;
+	width: 50%;
+	height: 50%;
+}
+
+#down {
+	position: absolute;
+	top: 50%;
+	bottom: 0%;
+	left: 25%;
+	right: 25%;
+	width: 50%;
+	height: 49%;
+}
+
+#left {
+	position: absolute;
+	top: 0%;
+	bottom: 0%;
+	left: 0%;
+	right: 75%;
+	width: 25%;
+	height: 99%;
+}
+
+#right {
+	position: absolute;
+	top: 0%;
+	bottom: 0%;
+	left: 75%;
+	right: 0%;
+	width: 25%;
+	height: 99%;
 }
 
 #btnWS {

@@ -5,6 +5,10 @@ var logsLimit = 3;
 var b = document.getElementById('btnWS');
 var c = document.getElementById('btnC');
 var f = document.getElementById('btnF');
+var up = document.getElementById('up');
+var down = document.getElementById('down');
+var left = document.getElementById('left');
+var right = document.getElementById('right');
 var enable = false;
 var filter = false;
 var blinkstr = " ";
@@ -133,6 +137,11 @@ function buttonHitF() {
 document.getElementById("btnWS").addEventListener("click", buttonHit);      //use buttonHit function
 document.getElementById("btnC").addEventListener("click", buttonHitC);
 document.getElementById("btnF").addEventListener("click", buttonHitF);
+up.addEventListener("click", buttonHitUp);
+down.addEventListener("click", buttonHitDown);
+left.addEventListener("click", buttonHitLeft);
+right.addEventListener("click", buttonHitRight);
+
 
 
 // Other functions
@@ -184,6 +193,42 @@ function initJoy() {
 	}, 1/10 * 1000);	
 */
 	window.addEventListener("keydown", getKey, false);
+}
+
+function buttonHitUp()
+{
+	if(enable) {
+		ws.send(JSON.stringify({
+			command: "up"
+		}));
+	}
+}
+
+function buttonHitDown()
+{
+	if(enable) {
+		ws.send(JSON.stringify({
+			command: "down"
+		}));
+	}
+}
+
+function buttonHitLeft()
+{
+	if(enable) {
+		ws.send(JSON.stringify({
+			command: "left"
+		}));
+	}
+}
+
+function buttonHitRight()
+{
+	if(enable) {
+		ws.send(JSON.stringify({
+			command: "right"
+		}));
+	}
 }
 
 function getKey(e) {
