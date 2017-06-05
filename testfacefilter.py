@@ -2,8 +2,8 @@ import numpy as np
 import os
 import cv2
 
-dirname = 'data/images'
-# img1 = cv2.imread('C:\Users\danielfelixkim\Documents\hi_2people.jpg')
+# dirname = 'data/images'
+img1 = cv2.imread('C:\Users\danielfelixkim\Documents\hi_2people.jpg')
 
 
 
@@ -12,12 +12,13 @@ def facedetect(image, face_filter_in):
 
 	face_cascade = cv2.CascadeClassifier('classifiers/haarcascade_frontalface_default.xml')
 	eye_cascade = cv2.CascadeClassifier('classifiers/haarcascade_eye.xml')
-	with open('face.jpg', 'wb') as f:
-		f.write(image)	
+	# with open('face.jpg', 'wb') as f:
+	# 	f.write(image)	
 #	print image
 #	fi = cStringIO.StringIO(image)
 #	print fi
-	img1 = cv2.imread('face.jpg')
+	# img1 = cv2.imread('face.jpg')
+	image = img1
 	image_rows,image_cols,image_channels = img1.shape
 #	img1 = convertToJpg(image)
 	gray1 = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)
@@ -40,41 +41,62 @@ def facedetect(image, face_filter_in):
 		# face_filter_height  = int(round(h * 1.2))
 		# face_filter_width  = int(round(face_filter_height * orig_filter_width / orig_filter_height))
 		face_filter = cv2.imread('dog_filter.png')
-		if face_filter_in = 'dog_filter':
+		if face_filter_in == 'dog_filter':
 			face_filter = cv2.imread('dog_filter.png')
 			x1 = x - 15 
 			x2 = x + w
 			y1 = y -50 
 			y2 = h+y + 70
+			rows,cols,channels = face_filter.shape
 
-		elif face_filter_in = 'mustache':
-			face_filter = cv2.imread('mustache.png')
+			# Check for clipping
+			if x1 < 0:
+				x1 = 0
+			if y1 < 0:
+				y1 = 0
+			if x2 > image_cols:
+				x2 = image_cols
+			if y2 > image_rows:
+				y2 = image_rows
 
-			
-		rows,cols,channels = face_filter.shape
-	
+			# Re-calculate the width and height of the filter image
+			filterWidth = x2 - x1
+			filterHeight = y2 - y1
+			# # Re-size the original image and the masks to the filter sizes calculated above
 
-		# Check for clipping
-		if x1 < 0:
-			x1 = 0
-		if y1 < 0:
-			y1 = 0
-		if x2 > image_cols:
-			x2 = image_cols
-		if y2 > image_rows:
-			y2 = image_rows
+			# Now create a mask of the filter and create its inverse mask also
+			img2gray = cv2.cvtColor(face_filter,cv2.COLOR_BGR2GRAY)
+			ret, mask = cv2.threshold(img2gray, 10, 255, cv2.THRESH_BINARY)
+			mask_inv = cv2.bitwise_not(mask)
 
-		# Re-calculate the width and height of the mustache image
-		filterWidth = x2 - x1
-		filterHeight = y2 - y1
-		# # Re-size the original image and the masks to the mustache sizes
-		# # calcualted above
+		elif face_filter_in == 'mustache':
+			face_filter = cv2.imread('mustache.png',-1)
+			x1 = centerFrame[0] - w/4 
+			x2 = centerFrame[0] + w/4
+			y1 = centerFrame[1] + h/16
+			y2 = centerFrame[1] + 2*h/8
+			# Check for clipping
+			if x1 < 0:
+				x1 = 0
+			if y1 < 0:
+				y1 = 0
+			if x2 > image_cols:
+				x2 = image_cols
+			if y2 > image_rows:
+				y2 = image_rows
 
+			# Re-calculate the width and height of the filter image
+			filterWidth = x2 - x1
+			filterHeight = y2 - y1
+			# # Re-size the original image and the masks to the filter sizes calculated above
 
-		# Now create a mask of logo and create its inverse mask also
-		img2gray = cv2.cvtColor(face_filter,cv2.COLOR_BGR2GRAY)
-		ret, mask = cv2.threshold(img2gray, 10, 255, cv2.THRESH_BINARY)
-		mask_inv = cv2.bitwise_not(mask)
+			# Now create a mask of the filter and create its inverse mask also
+			img2gray = cv2.cvtColor(face_filter,cv2.COLOR_BGR2GRAY)
+			mask = face_filter[:,:,3]
+			mask_inv = cv2.bitwise_not(mask)
+			face_filter = face_filter[:,:,0:3]
+
+		
 
 		filter_apply = cv2.resize(face_filter, (filterWidth,filterHeight), interpolation = cv2.INTER_AREA)
 		mask = cv2.resize(mask, (filterWidth,filterHeight), interpolation = cv2.INTER_AREA)
@@ -107,16 +129,16 @@ def facedetect(image, face_filter_in):
 
 
 
-	cv2.imwrite(os.path.join(dirname, 'img.png'),img1)
-	return "cmd=" + "".join(str(x) for x in command)
+	# cv2.imwrite(os.path.join(dirname, 'img.png'),img1)
+	# return "cmd=" + "".join(str(x) for x in command)
 	
 
 
-# facedetect(img1)
-# r = 600.0 / img1.shape[1]
-# dim = (600, int(img1.shape[0] * r))
-# img1 = cv2.resize(img1, dim, interpolation = cv2.INTER_AREA)
-# cv2.imshow('res',img1)
+facedetect(img1, 'mustache')
+r = 600.0 / img1.shape[1]
+dim = (600, int(img1.shape[0] * r))
+img1 = cv2.resize(img1, dim, interpolation = cv2.INTER_AREA)
+cv2.imshow('res',img1)
 
-# cv2.waitKey(0)
-# cv2.destroyAllWindows()
+cv2.waitKey(0)
+cv2.destroyAllWindows()
