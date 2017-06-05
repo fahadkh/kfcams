@@ -8,7 +8,7 @@ dirname = 'data/images'
 
 
 
-def facedetect(image, face_filter_in):
+def facedetect(image, face_filter_in='dog_filter'):
 
 	face_cascade = cv2.CascadeClassifier('classifiers/haarcascade_frontalface_default.xml')
 	eye_cascade = cv2.CascadeClassifier('classifiers/haarcascade_eye.xml')
@@ -40,19 +40,12 @@ def facedetect(image, face_filter_in):
 		# face_filter_height  = int(round(h * 1.2))
 		# face_filter_width  = int(round(face_filter_height * orig_filter_width / orig_filter_height))
 		face_filter = cv2.imread('dog_filter.png')
-		if face_filter_in = 'dog_filter':
-			face_filter = cv2.imread('dog_filter.png')
-			x1 = x - 15 
-			x2 = x + w
-			y1 = y -50 
-			y2 = h+y + 70
-
-		elif face_filter_in = 'mustache':
-			face_filter = cv2.imread('mustache.png')
-
+		x1 = x - 15 
+		x2 = x + w
+		y1 = y -50 
+		y2 = h+y + 70
 			
 		rows,cols,channels = face_filter.shape
-	
 
 		# Check for clipping
 		if x1 < 0:
