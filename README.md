@@ -19,3 +19,9 @@ Server: NGINX serves static files and proxies face detection requests to Tornado
 Website: Hosted on server (HTML, CSS, JS served by NGINX), opens websocket connection to server to communicate the presence of new frames. 
 
 Face detection: Haar Cascades with OpenCV
+
+## TODO
+
+Connect to a database for video storage and retrieval (Amazon S3)
+
+Add video capture buffers to improve performance
